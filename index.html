@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StarX Key Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-theme">
+  <div class="container">
+    <h1>StarX Key Dashboard</h1>
+
+    <!-- Create Key Section -->
+    <div class="section">
+      <h2>Create Key</h2>
+      <select id="expiration">
+        <option value="1d">1 Day</option>
+        <option value="1w">1 Week</option>
+        <option value="1m">1 Month</option>
+        <option value="1y">1 Year</option>
+      </select>
+      <button onclick="createKey()">Generate Key</button>
+      <p id="generated-key"></p>
+    </div>
+
+    <!-- Key Stats Section -->
+    <div class="section">
+      <h2>Key Statistics</h2>
+      <p>Total Keys: <span id="total-keys">0</span></p>
+      <p>Keys Generated (Last Hour): <span id="hourly-keys">0</span></p>
+      <p>Keys Generated (Last Day): <span id="daily-keys">0</span></p>
+      <p>Keys Generated (Last Week): <span id="weekly-keys">0</span></p>
+      <p>Keys Generated (Last Month): <span id="monthly-keys">0</span></p>
+    </div>
+
+    <!-- Key List Section -->
+    <div class="section">
+      <h2>Generated Keys</h2>
+      <ul id="key-list"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
