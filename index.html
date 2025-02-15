@@ -80,10 +80,10 @@
 </head>
 <body>
 
-
     <div class="container">
-        <h2>Pls Select One Quest To Get Key!</h2>
-        <p>Click Get Key And Complete all Steps then you will get your key! your key will expired In 24 hours!</p>
+        <!-- Display HWID if present in URL -->
+        <h2 id="hwid-message">Pls Select One Quest To Get Key!</h2>
+        <p>Click Get Key and complete all steps, then you will get your key! Your key will expire in 24 hours!</p>
     </div>
 
     <div class="links-provider">
@@ -96,9 +96,20 @@
     </div>
 
     <script>
+        // Get the HWID parameter from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const hwid = urlParams.get('hwid');
+        
+        // If HWID is present, display it; otherwise, show the default message
+        if (hwid) {
+            document.getElementById('hwid-message').textContent = `Your HWID: ${hwid}`;
+        }
+
+        // Redirect functions
         function loolabs() {
             window.open('https://loot-link.com/s?lEBLwTWS', '_blank');
         }
+
         function linkvertise() {
             window.open('https://direct-link.net/1236271/star-x-key-system', '_blank');
         }
