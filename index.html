@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gateaway</title>
+    <title>Gateway</title>
     <style>
         body {
             margin: 0;
@@ -43,6 +43,12 @@
             padding: 10px 20px;
             font-weight: bold;
             cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:disabled {
+            background-color: #666666;
+            cursor: not-allowed;
         }
 
         button:hover {
@@ -76,42 +82,70 @@
             width: 20px;
             height: 20px;
         }
+
+        .captcha-container {
+            margin-top: 15px;
+        }
     </style>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
 </head>
 <body>
 
     <div class="container">
-        <!-- Display HWID if present in URL -->
         <h2 id="hwid-message">Pls Select One Quest To Get Key!</h2>
         <p>Click Get Key and complete all steps, then you will get your key! Your key will expire in 24 hours!</p>
     </div>
 
     <div class="links-provider">
-        <button class="lootlabs-btn" onclick="loolabs()">
+        <button class="lootlabs-btn" onclick="loolabs()" disabled>
             <img src="assets/lootlabs.png" alt="Lootlabs" class="btn-icon"> Lootlabs
         </button>
-        <button class="linkvertise-btn" onclick="linkvertise()">
+        <button class="linkvertise-btn" onclick="linkvertise()" disabled>
             <img src="assets/linkvertise.png" alt="Linkvertise" class="btn-icon"> Linkvertise
         </button>
     </div>
 
+    <!-- hCaptcha -->
+    <div class="captcha-container">
+        <div class="h-captcha" data-sitekey="dbd636d0-b36e-4cf2-9f6e-06b601a0ef82" data-callback="captchaVerified"></div>
+    </div>
+
     <script>
-        // Get the HWID parameter from the URL
+        // Ambil HWID dari URL jika ada
         const urlParams = new URLSearchParams(window.location.search);
         const hwid = urlParams.get('hwid');
         
-        // If HWID is present, display it; otherwise, show the default message
+        // Jika HWID ada, tampilkan di halaman
         if (hwid) {
             document.getElementById('hwid-message').textContent = `Your HWID: ${hwid}`;
         }
 
-        // Redirect functions
+        // Status verifikasi hCaptcha
+        let captchaSuccess = false;
+
+        // Callback ketika CAPTCHA berhasil diselesaikan
+        function captchaVerified() {
+            captchaSuccess = true;
+            document.querySelectorAll("button").forEach(button => {
+                button.removeAttribute("disabled");
+            });
+        }
+
+        // Fungsi untuk membuka link setelah verifikasi hCaptcha
         function loolabs() {
-            window.open('https://loot-link.com/s?lEBLwTWS', '_blank');
+            if (captchaSuccess) {
+                window.open('https://loot-link.com/s?lEBLwTWS', '_blank');
+            } else {
+                alert("Please complete the captcha first!");
+            }
         }
 
         function linkvertise() {
-            window.open('https://direct-link.net/1236271/star-x-key-system', '_blank');
+            if (captchaSuccess) {
+                window.open('https://direct-link.net/1236271/star-x-key-system', '_blank');
+            } else {
+                alert("Please complete the captcha first!");
+            }
         }
     </script>
 </body>
