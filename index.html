@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gateway</title>
+    <title>Space Gateway</title>
     <style>
         /* Global Styles */
         * {
@@ -326,15 +326,15 @@
         
         <!-- hCaptcha Container -->
         <div class="captcha-container">
-            <div class="h-captcha" data-sitekey="dbd636d0-b36e-4cf2-9f6e-06b601a0ef82" data-callback="captchaVerified"></div>
+            <div class="h-captcha" data-sitekey="dbd636d0-b36e-4cf2-9f6e-06b601a0ef82" data-callback="onCaptchaVerified"></div>
         </div>
 
         <div class="buttons">
-            <button onclick="loolabs()" class="btn btn-lootlabs">
+            <button id="btn-lootlabs" class="btn btn-lootlabs" disabled>
                 <img src="assets/lootlabs.png" alt="Lootlabs"> 
                 <span>Lootlabs</span>
             </button>
-            <button onclick="linkvertise()" class="btn btn-linkvertise">
+            <button id="btn-linkvertise" class="btn btn-linkvertise" disabled>
                 <img src="assets/linkvertise.png" alt="Linkvertise"> 
                 <span>Linkvertise</span>
             </button>
@@ -351,7 +351,7 @@
         let captchaVerified = false;
 
         // Callback function yang dipanggil saat hCaptcha berhasil diselesaikan
-        function captchaVerified(response) {
+        function onCaptchaVerified(response) {
             captchaVerified = true;
             enableButtons(); // Aktifkan tombol setelah hCaptcha diselesaikan
         }
@@ -377,24 +377,22 @@
         }
 
         // Fungsi untuk menangani klik tombol Lootlabs
-        function loolabs() {
+        document.getElementById('btn-lootlabs').addEventListener('click', () => {
             if (!captchaVerified) {
                 alert("Please complete the hCaptcha first!");
                 return;
             }
-            animateButtonClick(document.querySelector('.btn-lootlabs'));
             window.open('https://loot-link.com/s?oYvVlY0X', '_blank');
-        }
+        });
 
         // Fungsi untuk menangani klik tombol Linkvertise
-        function linkvertise() {
+        document.getElementById('btn-linkvertise').addEventListener('click', () => {
             if (!captchaVerified) {
                 alert("Please complete the hCaptcha first!");
                 return;
             }
-            animateButtonClick(document.querySelector('.btn-linkvertise'));
             window.open('https://direct-link.net/1236271/star-x-key-system', '_blank');
-        }
+        });
 
         // Nonaktifkan tombol saat halaman dimuat
         document.addEventListener('DOMContentLoaded', function() {
@@ -448,14 +446,6 @@
             document.addEventListener('mouseleave', () => {
                 container.style.transform = 'perspective(1000px) rotateX(5deg)';
             });
-        }
-
-        // Button click animation
-        function animateButtonClick(button) {
-            button.style.transform = 'translateZ(10px) scale(0.95)';
-            setTimeout(() => {
-                button.style.transform = '';
-            }, 300);
         }
     </script>
 </body>
