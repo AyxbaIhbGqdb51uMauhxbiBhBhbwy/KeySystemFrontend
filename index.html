@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Star X Key System</title>
     <style>
-        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
@@ -26,7 +25,6 @@
             position: relative;
         }
 
-        /* Space Background */
         .space-bg {
             position: fixed;
             top: 0;
@@ -37,7 +35,6 @@
             z-index: -2;
         }
 
-        /* Stars */
         .stars {
             position: fixed;
             top: 0;
@@ -60,7 +57,6 @@
             50% { opacity: 1; transform: scale(1.5); }
         }
 
-        /* Nebula Effect */
         .nebula {
             position: fixed;
             top: 0;
@@ -74,7 +70,6 @@
             filter: blur(20px);
         }
 
-        /* Main Container */
         .container {
             background: rgba(23, 25, 40, 0.7);
             border: 1px solid rgba(123, 97, 255, 0.3);
@@ -94,13 +89,6 @@
             z-index: 1;
         }
 
-
-
-        @keyframes borderGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         .container:hover {
             transform: perspective(1000px) rotateX(0deg) translateY(-10px);
             box-shadow: 
@@ -108,7 +96,6 @@
                 0 0 80px rgba(123, 97, 255, 0.2);
         }
 
-        /* Title and Text */
         .title {
             font-size: 28px;
             font-weight: bold;
@@ -138,7 +125,6 @@
             transform: translateZ(30px);
         }
 
-        /* Buttons Container */
         .buttons {
             display: flex;
             justify-content: center;
@@ -154,7 +140,6 @@
             }
         }
 
-        /* Button Styles */
         .btn {
             display: flex;
             align-items: center;
@@ -215,7 +200,6 @@
             transform: translateZ(5px);
         }
 
-        /* Lootlabs Button */
         .btn-lootlabs {
             background: linear-gradient(45deg, #5e3bc9, #9168fd);
             color: white;
@@ -225,7 +209,6 @@
             background: linear-gradient(45deg, #6a45e5, #a57aff);
         }
 
-        /* Linkvertise Button */
         .btn-linkvertise {
             background: linear-gradient(45deg, #e6b800, #ffdb4d);
             color: #000;
@@ -235,7 +218,6 @@
             background: linear-gradient(45deg, #ffc800, #ffe066);
         }
 
-        /* Floating Planets */
         .planet {
             position: absolute;
             border-radius: 50%;
@@ -269,7 +251,6 @@
             100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); }
         }
 
-        /* Key Countdown Animation */
         .key-countdown {
             position: absolute;
             bottom: -30px;
@@ -290,7 +271,6 @@
             bottom: -20px;
         }
 
-        /* Captcha Container */
         .captcha-container {
             margin: 20px 0;
             display: flex;
@@ -299,21 +279,17 @@
     </style>
 </head>
 <body>
-    <!-- Space Background -->
     <div class="space-bg"></div>
     <div class="nebula"></div>
     <div class="stars" id="stars"></div>
 
-    <!-- Floating Planets -->
     <div class="planet planet-1"></div>
     <div class="planet planet-2"></div>
 
-    <!-- Main Container -->
     <div class="container" id="container">
         <h2 class="title">Select One Quest To Get Key!</h2>
         <p class="description">Click Get Key And Complete all Steps then you will get your key! Your key will expire in 24 hours!</p>
         
-        <!-- hCaptcha Container -->
         <div class="captcha-container">
             <div class="h-captcha" data-sitekey="dbd636d0-b36e-4cf2-9f6e-06b601a0ef82" data-callback="onCaptchaVerified"></div>
         </div>
@@ -332,20 +308,22 @@
         <div class="key-countdown">Your key will be valid for 24 hours</div>
     </div>
 
-    <!-- hCaptcha Script -->
     <script src="https://hcaptcha.com/1/api.js" async defer></script>
 
     <script>
-        // Fungsi untuk memeriksa apakah hCaptcha sudah diselesaikan
         let captchaVerified = false;
+        let clickCount = 0;
+        const finalUrl = 'https://www.effectiveratecpm.com/wkzgapqp3m?key=095566c4997f17b52bcbf4ab601a0992';
+        const popupUrls = [
+            'https://www.effectiveratecpm.com/wkzgapqp3m?key=095566c4997f17b52bcbf4ab601a0992',
+            'https://www.effectiveratecpm.com/wkzgapqp3m?key=095566c4997f17b52bcbf4ab601a0992'
+        ];
 
-        // Callback function yang dipanggil saat hCaptcha berhasil diselesaikan
-        function onCaptchaVerified(response) {
+        function onCaptchaVerified() {
             captchaVerified = true;
-            enableButtons(); // Aktifkan tombol setelah hCaptcha diselesaikan
+            enableButtons();
         }
 
-        // Fungsi untuk mengaktifkan tombol
         function enableButtons() {
             const buttons = document.querySelectorAll('.btn');
             buttons.forEach(button => {
@@ -355,7 +333,6 @@
             });
         }
 
-        // Fungsi untuk menonaktifkan tombol
         function disableButtons() {
             const buttons = document.querySelectorAll('.btn');
             buttons.forEach(button => {
@@ -365,32 +342,35 @@
             });
         }
 
-        // Fungsi untuk menangani klik tombol Lootlabs
-        document.getElementById('btn-lootlabs').addEventListener('click', () => {
+        function handleRedirect() {
             if (!captchaVerified) {
-                alert("Please complete the hCaptcha first!");
+                alert("Complete hCaptcha first!");
                 return;
             }
-            window.open('https://cri-xyz.github.io/script-source/', '_blank');
-        });
-
-        // Fungsi untuk menangani klik tombol Linkvertise
-        document.getElementById('btn-linkvertise').addEventListener('click', () => {
-            if (!captchaVerified) {
-                alert("Please complete the hCaptcha first!");
-                return;
+            
+            clickCount++;
+            
+            if (clickCount <= 2) {
+                window.open(popupUrls[clickCount - 1] || popupUrls[0], '_blank');
+                alert(`Complete step ${clickCount} of 2 first.`);
+            } else {
+                window.location.href = finalUrl;
             }
-            window.open('https://starx-lv.vercel.app/', '_blank');
-        });
+        }
 
-        // Nonaktifkan tombol saat halaman dimuat
+        document.getElementById('btn-lootlabs').addEventListener('click', handleRedirect);
+        document.getElementById('btn-linkvertise').addEventListener('click', handleRedirect);
+
         document.addEventListener('DOMContentLoaded', function() {
             createStars();
             add3DEffect();
-            disableButtons(); // Nonaktifkan tombol saat halaman dimuat
+            disableButtons();
+            
+            const script = document.createElement('script');
+            script.src = '//pl26271766.effectiveratecpm.com/a7/14/32/a71432c7332efb79dbd0ec4841f3deac.js';
+            document.head.appendChild(script);
         });
 
-        // Fungsi untuk membuat bintang
         function createStars() {
             const starsContainer = document.getElementById('stars');
             const numberOfStars = 200;
@@ -399,20 +379,16 @@
                 const star = document.createElement('div');
                 star.classList.add('star');
                 
-                // Random size between 1 and 3px
                 const size = Math.random() * 2 + 1;
                 star.style.width = `${size}px`;
                 star.style.height = `${size}px`;
                 
-                // Random position
                 star.style.left = `${Math.random() * 100}%`;
                 star.style.top = `${Math.random() * 100}%`;
                 
-                // Random animation duration and delay
                 const duration = `${Math.random() * 3 + 2}s`;
                 star.style.setProperty('--duration', duration);
                 
-                // Random opacity
                 const opacity = Math.random() * 0.5 + 0.3;
                 star.style.setProperty('--opacity', opacity);
                 
@@ -420,7 +396,6 @@
             }
         }
 
-        // 3D effect on mouse move
         function add3DEffect() {
             const container = document.getElementById('container');
             
@@ -431,7 +406,6 @@
                 container.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${-yAxis}deg)`;
             });
 
-            // Reset transform when mouse leaves
             document.addEventListener('mouseleave', () => {
                 container.style.transform = 'perspective(1000px) rotateX(5deg)';
             });
